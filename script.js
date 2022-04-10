@@ -33,7 +33,7 @@ Vue.component('product', {
     >
       Add to Cart
     </button>
-    <div class="cart">Cart ({{ cart }})</div>
+    
   </div>
 </div>`,
 
@@ -57,12 +57,11 @@ Vue.component('product', {
           variantQuantity: 0,
         },
       ],
-      cart: 0,
     }
   },
   methods: {
     addToCart() {
-      this.cart += 1
+      this.$emit('add-to-cart')
     },
     updateProduct(index) {
       this.selectedVariant = index
@@ -91,6 +90,12 @@ Vue.component('product', {
 var app = new Vue({
   el: '#app',
   data: {
-    premium: true,
+    premium: false,
+    cart: [],
+  },
+  methods: {
+    updateCart() {
+      this.cart += 1
+    },
   },
 })
