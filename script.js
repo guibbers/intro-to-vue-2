@@ -86,9 +86,8 @@ Vue.component('product', {
     shipping() {
       if (this.premium) {
         return 'Free'
-      } else {
-        return '$2.99'
       }
+      return '$2.99'
     },
   },
   mounted() {
@@ -144,22 +143,22 @@ Vue.component('product', {
     },
     methods: {
       onSubmit() {
+        this.errors = []
         if (this.name && this.review && this.rating) {
           let productReview = {
             name: this.name,
             review: this.review,
             rating: this.rating,
           }
+          eventBus.$emit('review-submitted', productReview)
+          this.name = null
+          this.review = null
+          this.rating = null
         } else {
           if (!this.name) this.errors.push('Name required.')
           if (!this.review) this.errors.push('Review required.')
           if (!this.rating) this.errors.push('Rating required.')
         }
-
-        eventBus.$emit('review-submitted', productReview)
-        this.name = null
-        this.review = null
-        this.rating = null
       },
     },
   })
